@@ -1,11 +1,11 @@
-## Jenkins Android构建
+## Jenkins Android安装和配置说明
 
 ### Jenkins介绍
 
 Jenkins是一个独立的开源自动化服务器，可用于自动化各种任务，如构建，测试和部署软件。Jenkins可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运行
 
 #### 概述
-本节是入门指南的一部分。它提供了许多平台上基本的Jenkins配置的说明。但不涵盖安装Jenkins的全部注意事项或选项。
+本节是入门指南的一部分。它提供了Android平台基本的Jenkins配置的说明。但不涵盖安装Jenkins的全部注意事项或选项。
 
 预安装
 这些仅仅是入门，有关因素的全面讨论，请参见[硬件建议讨论](https://jenkins.io/doc/book/hardware-recommendations/) 。
@@ -136,7 +136,133 @@ Note:The default Jenkins server is NOT encrypted, so the data submitted with thi
 
 点击"Start using Jenkins"去访问Jenkins面板。
 
-![Img](http://chuantu.biz/t6/331/1529631292x-1566657621.png)
-
 ### Support or Contact
 
+
+### Jenkins Android配置
+
+先看看效果：
+
+构建历史与归档:
+![Img](http://chuantu.biz/t6/331/1529632872x-1566657621.png)
+
+分支选择与环境选择:
+![Img](http://chuantu.biz/t6/331/1529632910x-1566657621.png)
+
+#### 开始配置:
+
+#### 分支选择配置
+使用插件: Git Parameter
+
+进入项目的configure，在General页面的Description里面编写打包说明。
+
+勾选 This project is parameterized在选框里点击 Add parameter并选择Git parameter。
+
+![Img](http://chuantu.biz/t6/331/1529633418x-1566657621.png)
+
+Name:随便命一个名，将作为分支选择的环境变量
+
+Description:分支说明
+
+Parameter Type:选择Branch (按照个人或者公司需要配置)
+
+#### 打包环境选择
+
+![Img](http://chuantu.biz/t6/331/1529633621x-1566657621.png)
+
+和上述一样选择 Add Parameter的选择框选择Choice Parameter的选项
+
+Name:ENVIRONMENT(环境变量)
+
+Choices:项目gradle 里配置的打包环境
+
+#### Git仓库配置
+
+选择Git,
+Repository URL: 填写仓库地址
+Credentials: 选择SSH秘钥
+
+Branches to build:
+
+Branch Specifier (blank for 'any'): refs/remotes/${GIT_BRANCH} 注:GIT_BRANCH之前配置的环境变量
+
+
+#### 构建环境配置
+
+![Img](http://chuantu.biz/t6/331/1529634300x-1566657621.png)
+
+勾选Set Build Name(这里使用**Build Name Setter Plugin**)
+
+#### [Build Name Setter Plugin]()
+
+搜 `build-name-setter`，允许自定义构建名。
+
+例1：移动端 `#编号 - 选项(Git分支名) by 构建人` 格式
+
+自动化测试job往往设了参数，一个job对应多套环境/多种情况    
+原生的构建名只有 #1、#2……之类，无法直观的看到每次构建用了什么参数
+
+【配置】
+
+job设置页，`Build Environment -> Set Build Name`
+
+例：
+
+`#${BUILD_NUMBER} - ${ENV,var="BUILD_TYPE"}(${GIT_BRANCH}) by ${ENV,var="BUILD_USER"}`
+
+输出：
+
+高级选项里默认选中构建前后都改名，只保留构建后就行。  
+（构建前就改的话，左下进度栏显示不下挤变形不好看）
+
+PS：`Build`里也有`Update build name`
+
+#### Build 
+
+![Img](http://chuantu.biz/t6/331/1529635137x-1404764331.png)
+
+` 勾选 Invoke Gradle
+- Execute shell
+  shell是构建完成后的脚本，将apk和mapping文件复制到一个新目录中以做归档使用，每次判断归档前2min与上一次文件有没有移动，移动过则删除。
+  根据情况可以酌情参考或更改。
+```shell
+  # delete old apk (before 1 min) in sub folders
+ test $? -eq 0 && find ${WORKSPACE}/app/build/outputs/apk -mindepth 1 -maxdepth 3 -type f -mmin +2 -exec rm -f {} \;
+
+ # move mapping.txt to archive dir
+ archive_dir=${WORKSPACE}/app/build/outputs/archive
+ test -d ${archive_dir} && rm -rf "${archive_dir}"
+
+ mkdir -p ${archive_dir}
+ build_dir=$(echo ${ENVIRONMENT} | tr '[:upper:]' '[:lower:]')  # to lower case
+ cp ${WORKSPACE}/app/build/outputs/apk/${build_dir}/*.apk ${archive_dir}
+
+ debugMode="debug"
+ if [ ${build_dir} != $debugMode ]
+ then
+    cp ${WORKSPACE}/app/build/outputs/mapping/${build_dir}/mapping.txt ${archive_dir}
+ fi
+```
+
+### Post-build Actions 构建后动作
+![Img](http://chuantu.biz/t6/331/1529636795x-1404764331.png)
+
+这里主要是对APK和Mapping文件进行归档：
+
+app/build/outputs/archive/**/*.apk,app/build/outputs/archive/**/mapping.txt
+
+
+#### SDK和Gradle的下载与配置
+
+![Img](http://chuantu.biz/t6/331/1529637911x-1566657621.png)
+
+SDK下载完成在系统设置里配置环境变量**Global properties**选项里勾选
+Environment variables配置SDK的环境变量。
+
+http://chuantu.biz/t6/331/1529637911x-1566657621.png
+
+#### Global Tool Configuration
+
+**JDK installations** JDK配置环境变量
+
+**Gradle installation** 配置环境变量
