@@ -221,11 +221,12 @@ PS：`Build`里也有`Update build name`
 
 ![Img](http://chuantu.biz/t6/331/1529635137x-1404764331.png)
 
-` 勾选 Invoke Gradle
+- 勾选 Invoke Gradle
 - Execute shell
   shell是构建完成后的脚本，将apk和mapping文件复制到一个新目录中以做归档使用，每次判断归档前2min与上一次文件有没有移动，移动过则删除。
   根据情况可以酌情参考或更改。
-```c
+  
+```shell
   # delete old apk (before 1 min) in sub folders
  test $? -eq 0 && find ${WORKSPACE}/app/build/outputs/apk -mindepth 1 -maxdepth 3 -type f -mmin +2 -exec rm -f {} \;
 
