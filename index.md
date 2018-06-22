@@ -259,7 +259,7 @@ app/build/outputs/archive/**/*.apk,app/build/outputs/archive/**/mapping.txt
 SDK下载完成在系统设置里配置环境变量**Global properties**选项里勾选
 Environment variables配置SDK的环境变量。
 
-http://chuantu.biz/t6/331/1529637911x-1566657621.png
+![Img](http://chuantu.biz/t6/331/1529637911x-1566657621.png)
 
 ### Global Tool Configuration
 
@@ -270,4 +270,12 @@ http://chuantu.biz/t6/331/1529637911x-1566657621.png
 ### Support or Contact
 
 任何问题可以投递我邮箱flycai016@gmail.com或建立issues。
+
+相关文献参考:
+
+[How to install "Open JDK" (Java developement kit) in Ubuntu (Linux)?](https://stackoverflow.com/questions/14788345/how-to-install-the-jdk-on-ubuntu-linux)
+
+[How To Install Jenkins on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-16-04)
+
+
 
