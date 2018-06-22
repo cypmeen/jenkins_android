@@ -136,7 +136,7 @@ Note:The default Jenkins server is NOT encrypted, so the data submitted with thi
 
 点击"Start using Jenkins"去访问Jenkins面板。
 
-### Support or Contact
+
 
 
 ### Jenkins Android配置
@@ -261,8 +261,13 @@ Environment variables配置SDK的环境变量。
 
 http://chuantu.biz/t6/331/1529637911x-1566657621.png
 
-#### Global Tool Configuration
+### Global Tool Configuration
 
 **JDK installations** JDK配置环境变量
 
 **Gradle installation** 配置环境变量
+
+### Support or Contact
+
+任何问题可以投递我邮箱flycai016@gmail.com或建立issues。
+
