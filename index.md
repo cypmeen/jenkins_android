@@ -253,6 +253,43 @@ PS：`Build`里也有`Update build name`
 app/build/outputs/archive/**/*.apk,app/build/outputs/archive/**/mapping.txt
 
 
+
+
+
+
+### Global roles
+### [Role-based Authorization Strategy]()
+按项目授权
+
+首先任何人都必须有Overall - Read  
+
+- 最小必要权限：能不给就不给，能在项目设置的就不给全局
+- 权限跟职位分离：方便看人看需要给权限
+
+参考角色：
+
+- admin
+    - 全部
+- jenkins_manager（不怕手滑的admin）
+    - Overall: Administer, ConfigureUpdateCenter, Read
+    - Credentials：除了Delete外全部
+    - Agent(Slave): 除了Delete外全部
+    - Job：除了Delete外全部
+    - Run：除了Delete外全部
+    - View：除了Delete外全部
+    - SCM：全部
+- job_manager
+    - Overall: Read
+    - Agent: Build, Connect
+    - Job：除了Delete外全部
+    - Run: 除了Delete外全部
+    - View：除了Delete外全部
+- user
+    - Overall: Read
+    - Agent：Build, Connect
+- read_only
+    - Overall: Read
+
 #### SDK和Gradle的下载与配置
 
 ![Img](http://chuantu.biz/t6/331/1529637911x-1566657621.png)
