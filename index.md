@@ -227,22 +227,22 @@ PS：`Build`里也有`Update build name`
   根据情况可以酌情参考或更改。
   
 ```shell
-  # delete old apk (before 1 min) in sub folders
- test $? -eq 0 && find ${WORKSPACE}/app/build/outputs/apk -mindepth 1 -maxdepth 3 -type f -mmin +2 -exec rm -f {} \;
+   # delete old apk (before 1 min) in sub folders
+  test $? -eq 0 && find ${WORKSPACE}/app/build/outputs/apk -mindepth 1 -maxdepth 3 -type f -mmin +2 -exec rm -f {} \;
 
- # move mapping.txt to archive dir
- archive_dir=${WORKSPACE}/app/build/outputs/archive
- test -d ${archive_dir} && rm -rf "${archive_dir}"
+  # move mapping.txt to archive dir
+  archive_dir=${WORKSPACE}/app/build/outputs/archive
+  test -d ${archive_dir} && rm -rf "${archive_dir}"
 
- mkdir -p ${archive_dir}
- build_dir=$(echo ${ENVIRONMENT} | tr '[:upper:]' '[:lower:]')  # to lower case
- cp ${WORKSPACE}/app/build/outputs/apk/${build_dir}/*.apk ${archive_dir}
+  mkdir -p ${archive_dir}
+  build_dir=$(echo ${ENVIRONMENT} | tr '[:upper:]' '[:lower:]')  # to lower case
+  cp ${WORKSPACE}/app/build/outputs/apk/${build_dir}/*.apk ${archive_dir}
 
- debugMode="debug"
- if [ ${build_dir} != $debugMode ]
- then
-    cp ${WORKSPACE}/app/build/outputs/mapping/${build_dir}/mapping.txt ${archive_dir}
- fi
+  debugMode="debug"
+  if [ ${build_dir} != $debugMode ]
+  then
+     cp ${WORKSPACE}/app/build/outputs/mapping/${build_dir}/mapping.txt ${archive_dir}
+  fi
 ```
 
 ### Post-build Actions 构建后动作
