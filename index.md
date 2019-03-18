@@ -189,7 +189,7 @@ Branch Specifier (blank for 'any'): refs/remotes/${GIT_BRANCH} 注:GIT_BRANCH之
 
 #### 构建环境配置
 
-![Img](http://chuantu.biz/t6/331/1529634300x-1566657621.png)
+![Img](/build-environment.png)
 
 勾选Set Build Name(这里使用**Build Name Setter Plugin**)
 
@@ -219,7 +219,7 @@ PS：`Build`里也有`Update build name`
 
 #### Build 
 
-![Img](http://chuantu.biz/t6/331/1529635137x-1404764331.png)
+![Img](/execute-shell.png)
 
 - 勾选 Invoke Gradle
 - Execute shell
@@ -246,7 +246,7 @@ PS：`Build`里也有`Update build name`
 ```
 
 ### Post-build Actions 构建后动作
-![Img](http://chuantu.biz/t6/331/1529636795x-1404764331.png)
+![Img](/post-build-action.png)
 
 这里主要是对APK和Mapping文件进行归档：
 
@@ -292,7 +292,7 @@ app/build/outputs/archive/**/*.apk,app/build/outputs/archive/**/mapping.txt
 
 #### SDK和Gradle的下载与配置
 
-![Img](http://chuantu.biz/t6/331/1529637911x-1566657621.png)
+![Img](/invoke-gradle-script.png)
 
 SDK下载完成在系统设置里配置环境变量**Global properties**选项里勾选
 Environment variables配置SDK的环境变量。
